@@ -22,22 +22,33 @@ Route::get('/', inicioController::class);
 Route::controller(productoController::class)->group(function(){
 
     route::get('producto', 'principal')->name('producto.principal');
-   
+
     Route::get('producto/{variable}/mostrar', 'mostrar')->name('producto.mostrar');
-   
+
+
     route::get('producto/crear', 'crear')->name('producto.crear');
 
     route::post('producto','store')->name('producto.store');
 
+
     route::get('producto/{producto}/edit', 'editar')->name('producto.editar');
 
-    Route::put('producto/{producto}', 'update')->name('producto.update');
+    route::put('producto/{producto}', 'update')->name('producto.update');
 
-    Route::delete('producto/{id}', 'borrar')->name('producto.borrar');
+    route::delete('producto/{id}', 'borrar')->name('producto.borrar');
 
-    Route::get('desactiva/{id}', 'desactivaproducto')->name('desactivapro');
+    route::get('desactiva/{id}', 'desactivaproducto')->name('desactivapro');
 
-    Route::get('activa/{id}', 'activaproducto')->name('activapro');
+    route::get('activa/{id}', 'activaproducto')->name('activapro');
+
+
+
+
 });
 
 
+
+Route::middleware([
+    'auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
+    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+});
